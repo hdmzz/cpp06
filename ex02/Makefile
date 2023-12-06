@@ -1,7 +1,7 @@
 .PHONY: all re clean fclean
 
 # Program name
-NAME	= serializer
+NAME	= realtype
 
 # Compiler
 CC		= c++
