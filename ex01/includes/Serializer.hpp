@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   Serializer.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/28 09:52:50 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/12/06 06:35:16 by hdamitzi         ###   ########.fr       */
+/*   Created: 2023/12/06 09:08:22 by hdamitzi          #+#    #+#             */
+/*   Updated: 2023/12/06 11:46:30 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCALARCONVERTER_HPP
-# define SCALARCONVERTER_HPP
+#ifndef SERIALIZER_HPP
+# define SERIALIZER_HPP
+
+# include <stdint.h>
 # include <iostream>
-# include <limits>
-# include <cstdlib>
-
-class ScalarConverter {
-private:
-    ScalarConverter();
-    ScalarConverter(ScalarConverter const & src);
-    ScalarConverter & operator=(ScalarConverter const &rhv);
-public:
-    static void convert(std::string const &literal);
-
-    ScalarConverter(std::string const & literal);
-    ~ScalarConverter();
+struct Data
+{
+    int value;
+    std::string str;
 };
+
+class Serializer
+{
+public:
+    static uintptr_t serialize(Data *ptr);
+    static Data *deserialize(uintptr_t raw);
+
+    Serializer(void);
+    Serializer(Serializer &src);
+    ~Serializer();
+    Serializer & operator=(Serializer const &rhv);
+};
+
+std::ostream &operator<<(std::ostream &os, const Data &obj);
 
 #endif
