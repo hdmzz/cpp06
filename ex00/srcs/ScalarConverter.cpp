@@ -6,7 +6,7 @@
 /*   By: hdamitzi <hdamitzi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 06:06:36 by hdamitzi          #+#    #+#             */
-/*   Updated: 2023/12/06 10:56:00 by hdamitzi         ###   ########.fr       */
+/*   Updated: 2023/12/09 01:36:17 by hdamitzi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,15 @@ void ScalarConverter::convert(std::string const & literal)
 	{
 		toFloat = std::atof(literal.c_str());
 		toDouble = static_cast<double>(toFloat);
-	} else 
-	{
+	} else {
         char *endPtrDouble;
 		toDouble = std::strtod(literal.c_str(), &endPtrDouble);
-        if (endPtrDouble == literal.c_str() || *endPtrDouble != '\0')
+        if (endPtrDouble == literal.c_str() || toDouble > std::numeric_limits<char>::max() || toDouble < std::numeric_limits<char>::min())
             toChar = "impossible";
-        else {
-            toDouble = static_cast<double>(toDouble);
-		    toFloat = static_cast<float>(toDouble);
-        }
+		else
+			toChar = static_cast<char>(toDouble);
+		toDouble = static_cast<double>(toDouble);
+		toFloat = static_cast<float>(toDouble);
 	}
 
 	for (int i = 0; i < 6; ++i) 
@@ -87,12 +86,10 @@ void ScalarConverter::convert(std::string const & literal)
 		}
 	}
 	if (toChar == "") 
-	{
 		toChar = "Non displayable";
-	}
 
 	std::cout << "char: " << toChar << std::endl;
-	if (toChar == "impossible" || toInt > std::numeric_limits<int>::max() || toInt < std::numeric_limits<int>::min()) 
+	if (toInt > std::numeric_limits<int>::max() || toInt < std::numeric_limits<int>::min()) 
 	{
 		std::cout << "int: impossible" << std::endl;
 	} 
